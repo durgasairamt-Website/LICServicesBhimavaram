@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Your Future - Life Insurance Corporation</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-section {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://placehold.co/1920x1080/0d52a2/ffffff?text=Secure+Your+Future');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+        .product-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        /* Simple modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            min-width: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Modal for messages, replacing alert() -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage" class="text-xl font-semibold mb-4"></p>
+            <button onclick="closeModal()" class="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300">Close</button>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- LIC Logo Placeholder -->
+            <a href="#" class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.93c-2.83-.56-5-2.9-5-5.93 0-.7.13-1.37.37-2l3.43 3.43c.77.77 2.03.77 2.8 0L15.63 7.37c-.63-.25-1.3-.37-2-.37-3.03 0-5.37 2.17-5.93 5s2.17 5.37 5 5.93zM12 4c1.86 0 3.52.8 4.67 2.08L14.83 8.3c-.62-.62-1.46-1-2.33-1-.9 0-1.74.43-2.35 1.05L7.33 6.08C8.48 4.8 10.14 4 12 4zm5.55 4.54l-2.82 2.82c.16.27.3.56.41.86l2.13-2.13c-.6-.73-1.32-1.33-2.1-1.76zM12 18c.36 0 .72-.05 1.07-.15L15 17.5c.35-.1.7-.15 1.07-.15.9 0 1.74.43 2.35 1.05L18.67 17.92c-1.15 1.28-2.81 2.08-4.67 2.08-1.86 0-3.52-.8-4.67-2.08l1.72-1.72c.6.62 1.44 1.05 2.35 1.05z"/>
+                </svg>
+                <span class="text-2xl font-bold text-gray-900">LIC India</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="hidden md:flex space-x-8 text-lg">
+                <li><a href="#hero" class="text-gray-600 hover:text-blue-600 transition duration-300">Home</a></li>
+                <li><a href="#products" class="text-gray-600 hover:text-blue-600 transition duration-300">Products</a></li>
+                <li><a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300">About Us</a></li>
+                <li><a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-300">Contact</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-4">
+            <ul class="flex flex-col items-center space-y-4 text-xl">
+                <li><a href="#hero" class="text-gray-600 hover:text-blue-600 transition duration-300">Home</a></li>
+                <li><a href="#products" class="text-gray-600 hover:text-blue-600 transition duration-300">Products</a></li>
+                <li><a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300">About Us</a></li>
+                <li><a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section h-screen flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl text-white">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 text-shadow">
+                Your Life, Your Security, Our Commitment.
+            </h1>
+            <p class="text-xl sm:text-2xl font-light mb-8 text-shadow">
+                Protecting your dreams with a wide range of trusted insurance solutions.
+            </p>
+            <a href="#contact" class="px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-300 transform hover:scale-105 inline-block shadow-lg">
+                Get a Free Quote Today
+            </a>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">About LIC</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                With a legacy spanning decades, Life Insurance Corporation of India (LIC) has been a symbol of trust and financial security for millions of families. Our mission is to provide comprehensive and accessible insurance products that empower individuals to secure their future and achieve their financial goals.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div class="p-6 bg-blue-50 rounded-2xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-800">Mission</h3>
+                    <p class="text-gray-600">To provide financial security and superior value to our customers, ensuring their future well-being.</p>
+                </div>
+                <div class="p-6 bg-blue-50 rounded-2xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-800">Vision</h3>
+                    <p class="text-gray-600">To be the most trusted life insurance provider, synonymous with stability and customer satisfaction.</p>
+                </div>
+                <div class="p-6 bg-blue-50 rounded-2xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-800">Values</h3>
+                    <p class="text-gray-600">Integrity, reliability, and customer-centricity are at the core of everything we do.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">Our Products</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
+                Discover a plan that fits your life. Our diverse portfolio of policies is designed to meet every financial need.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1: Life Insurance -->
+                <div class="product-card p-6 bg-white rounded-2xl shadow-md">
+                    <div class="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Term Insurance</h3>
+                    <p class="text-gray-600">Affordable life cover that provides financial protection to your family in your absence. Pure protection, no frills.</p>
+                </div>
+
+                <!-- Product Card 2: Retirement Plans -->
+                <div class="product-card p-6 bg-white rounded-2xl shadow-md">
+                    <div class="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 17h-2v-4h-2v4h-2v-4h-2v4h-2v-4H9v4H7v-4H5v4H3v2h18v-2zm-6-8h2V5h-2v4zM9 9h2V5H9v4zm-2-4v4H5V5h2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Retirement Plans</h3>
+                    <p class="text-gray-600">Secure a stable income for your golden years. Our pension plans offer a guaranteed source of funds after retirement.</p>
+                </div>
+
+                <!-- Product Card 3: Endowment Plans -->
+                <div class="product-card p-6 bg-white rounded-2xl shadow-md">
+                    <div class="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v5h-2V7zm0 6h2v2h-2v-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Endowment Plans</h3>
+                    <p class="text-gray-600">A perfect blend of savings and insurance. Get a lump sum at maturity or a death benefit to your nominee.</p>
+                </div>
+                <!-- Add more product cards as needed -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">What Our Clients Say</h2>
+            <p class="text-lg text-gray-600 mb-12">
+                Hear from those who have trusted us to protect their loved ones and secure their future.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-100 p-6 rounded-2xl shadow-md">
+                    <p class="text-lg italic text-gray-700 mb-4">
+                        "LIC has been a pillar of strength for my family. Their policy gave me peace of mind, knowing my children's future is secure. The process was simple and the team was incredibly supportive."
+                    </p>
+                    <p class="font-semibold text-gray-900">- Priya Sharma</p>
+                    <p class="text-sm text-gray-500">Teacher, Delhi</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-100 p-6 rounded-2xl shadow-md">
+                    <p class="text-lg italic text-gray-700 mb-4">
+                        "The retirement plan I chose has provided a stable income stream, allowing me to enjoy my retirement without any financial worries. I highly recommend LIC for their reliability and great service."
+                    </p>
+                    <p class="font-semibold text-gray-900">- Ramesh Kumar</p>
+                    <p class="text-sm text-gray-500">Retired Engineer, Mumbai</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24 bg-blue-600">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Get in Touch</h2>
+            <p class="text-lg text-blue-100 mb-8">
+                Ready to secure your future? Fill out the form below and our team will contact you shortly.
+            </p>
+            <form id="contactForm" class="bg-white p-8 rounded-2xl shadow-lg mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <input type="text" id="name" name="name" placeholder="Your Name" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-600" required>
+                    </div>
+                    <div>
+                        <input type="email" id="email" name="email" placeholder="Your Email" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-600" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-600" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <textarea id="message" name="message" placeholder="Your Message" rows="5" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-600" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="w-full px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-300 transform hover:scale-105">
+                    Submit Inquiry
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 mb-8">
+                <!-- Footer Logo -->
+                <div class="flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.93c-2.83-.56-5-2.9-5-5.93 0-.7.13-1.37.37-2l3.43 3.43c.77.77 2.03.77 2.8 0L15.63 7.37c-.63-.25-1.3-.37-2-.37-3.03 0-5.37 2.17-5.93 5s2.17 5.37 5 5.93zM12 4c1.86 0 3.52.8 4.67 2.08L14.83 8.3c-.62-.62-1.46-1-2.33-1-.9 0-1.74.43-2.35 1.05L7.33 6.08C8.48 4.8 10.14 4 12 4zm5.55 4.54l-2.82 2.82c.16.27.3.56.41.86l2.13-2.13c-.6-.73-1.32-1.33-2.1-1.76zM12 18c.36 0 .72-.05 1.07-.15L15 17.5c.35-.1.7-.15 1.07-.15.9 0 1.74.43 2.35 1.05L18.67 17.92c-1.15 1.28-2.81 2.08-4.67 2.08-1.86 0-3.52-.8-4.67-2.08l1.72-1.72c.6.62 1.44 1.05 2.35 1.05z"/>
+                    </svg>
+                    <span class="text-xl font-bold">LIC India</span>
+                </div>
+                <!-- Social Media Icons -->
+                <div class="flex space-x-6">
+                    <a href="#" aria-label="Facebook" class="hover:text-blue-500 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.146 7.55h-1.355v-.748c0-.306.11-.513.513-.513h.841V7.07c-.146 0-.649-.064-1.29-.064-1.282 0-2.164.78-2.164 2.222v1.104H8.72V12.9h1.944v5.397h2.464V12.9h1.968l.298-2.261h-2.266v-1.09c0-.655.18-.847.88-.847z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter" class="hover:text-blue-500 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.46 6c-.76.34-1.57.57-2.42.68.87-.52 1.54-1.34 1.85-2.31-.82.48-1.73.83-2.7.99C18.65 4.54 17.65 4 16.5 4c-2.36 0-4.29 1.93-4.29 4.3 0 .34.04.67.11.99-3.57-.18-6.74-1.89-8.86-4.48-.37.64-.58 1.39-.58 2.19 0 1.49.75 2.81 1.9 3.59-.7-.02-1.35-.22-1.92-.53v.05c0 2.08 1.48 3.81 3.44 4.2-1.2.33-2.46.42-3.73.14.54 1.7 2.15 2.94 4.05 2.98-1.55 1.21-3.5 1.93-5.64 1.93-.37 0-.74-.02-1.1-.06 2.01 1.29 4.39 2.04 6.96 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.01-.6z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="hover:text-blue-500 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8 10h-2v7h2v-7zm-1-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm11 3h-2v7h2v-3.5c0-1.87 1.29-2.03 1.29-2.03s-.47-.46-.62-.64c.26-.2.43-.37.56-.51.48-.56.88-1.2.88-1.72s-.4-1.07-.4-1.07h-1.63z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <p>&copy; 2025 LIC Marketing. All Rights Reserved. <span class="block mt-1 md:inline">Proudly represented by our agents.</span></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Function to show the custom modal
+        function showModal(message) {
+            const modal = document.getElementById('messageModal');
+            const modalMessage = document.getElementById('modalMessage');
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+        }
+        
+        // Function to close the custom modal
+        function closeModal() {
+            const modal = document.getElementById('messageModal');
+            modal.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Toggle mobile menu visibility
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Handle form submission
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                showModal('Thank you for your inquiry! We will contact you shortly.');
+                contactForm.reset();
+            });
+        });
+    </script>
+
+</body>
+</html>
